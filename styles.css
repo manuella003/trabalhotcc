@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lora", serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('./senai.jpg') ;
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+   width: 420px;
+   background-color: rgba(51, 50, 50, 0.863);
+   border: 2px solid  rgba(85, 84, 84, 0.514);;
+   border-radius: 10px;
+   color: #000000;
+}
