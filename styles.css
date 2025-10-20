@@ -12,16 +12,17 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('./senai.jpg') ;
+    background: url('./senaii.webp') ;
     background-size: cover;
     background-position: center;
 }
 
 .container {
    width: 420px;
-   background-color: rgba(51, 50, 50, 0.863);
-   border: 2px solid  rgba(85, 84, 84, 0.514);;
+   background-color: rgb(1, 8, 75);
+   border: 2px solid  rgba(255, 255, 255, 0);;
    border-radius: 10px;
-   color: #ffffff;
+   color: #ffffffde;
    padding: 30px 40px;
+   margin-right: 900px;
 }
