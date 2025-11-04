@@ -1,45 +1,477 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<!--testecommit-->
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="styles.css">
-    <title>Senai Login</title>
+    <title>Sistema de Gestão de Professores e Horários</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
 </head>
-
-<body>
-    <main class="container">
-        <form>
-            <h1>Login</h1>
-            <div class="input-box">
-                <i class="bx bxs-user"></i>
-                <input placeholder="Usuário" type="email">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex items-center gap-3">
+                <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Sistema de Gestão Escolar</h1>
+                    <p class="text-gray-600">Organize professores e horários de forma eficiente</p>
+                </div>
             </div>
-            <div class="input-box">
-                <i class="bx bxs-lock-alt"></i>
-                <input placeholder="Senha" type="password">
+        </div>
+
+        <!-- Navigation -->
+        <div class="bg-white rounded-lg shadow-lg p-4 mb-6">
+            <div class="flex gap-4">
+                <button onclick="showView('dashboard')" id="btnDashboard" class="px-6 py-3 rounded-lg font-medium transition-all bg-indigo-600 text-white shadow-md">
+                     Grade de Horários
+                </button>
+                <button onclick="showView('teachers')" id="btnTeachers" class="px-6 py-3 rounded-lg font-medium transition-all bg-gray-100 text-gray-700 hover:bg-gray-200">
+                     Professores
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboardView" class="space-y-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Grade de Horários</h2>
+                    <button onclick="openScheduleForm()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                        ➕ Adicionar Horário
+                    </button>
+                </div>
+
+                <div id="scheduleGrid" class="overflow-x-auto">
+                    <div class="text-center py-12 text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <p>Nenhum horário cadastrado ainda.</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="remember-forgot">
-                <label>
-                    <input type="checkbox">
-                    Lembrar senha
-                </label>
-                <a href="#">Esqueci a senha</a>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Lista de Horários</h3>
+                <div id="scheduleList">
+                    <p class="text-gray-500 text-center py-4">Nenhum horário na lista.</p>
+                </div>
+            </div>
+        </div>
 
+        <!-- Teachers View -->
+        <div id="teachersView" class="bg-white rounded-lg shadow-lg p-6" style="display: none;">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Professores Cadastrados</h2>
+                <button onclick="openTeacherForm()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2">
+                    ➕ Cadastrar Professor
+                </button>
             </div>
 
-            <button type="submit" class="login">Login</button>
-
-            <div class="register-link">
-                <p>Não tem nenhuma conta? <a href="#">Cadastre-se</a></p>
-                
+            <div id="teachersList">
+                <div class="text-center py-12 text-gray-500">
+                    <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <p>Nenhum professor cadastrado ainda.</p>
+                </div>
             </div>
-        </form>
+        </div>
 
-    </main>
+        <!-- Teacher Form Modal -->
+        <div id="teacherModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" style="display: none;">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto fade-in">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" id="teacherFormTitle">Cadastrar Novo Professor</h3>
+                    <button onclick="closeTeacherForm()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
+                        <input type="text" id="teacherName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                        <input type="email" id="teacherEmail" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Telefone *</label>
+                        <input type="tel" id="teacherPhone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Disciplinas *</label>
+                        <input type="text" id="teacherSubjects" placeholder="Ex: Matemática, Física" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Bio (opcional)</label>
+                        <textarea id="teacherBio" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"></textarea>
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button onclick="saveTeacher()" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+                             Salvar
+                        </button>
+                        <button onclick="closeTeacherForm()" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Form Modal -->
+        <div id="scheduleModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" style="display: none;">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto fade-in">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" id="scheduleFormTitle">Adicionar Novo Horário</h3>
+                    <button onclick="closeScheduleForm()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Professor</label>
+                        <select id="scheduleTeacher" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <option value="">Selecione um professor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Disciplina</label>
+                        <input type="text" id="scheduleSubject" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Dia da Semana</label>
+                        <select id="scheduleDay" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <option value="">Selecione um dia</option>
+                            <option value="Segunda">Segunda</option>
+                            <option value="Terça">Terça</option>
+                            <option value="Quarta">Quarta</option>
+                            <option value="Quinta">Quinta</option>
+                            <option value="Sexta">Sexta</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Hora Início</label>
+                            <input type="time" id="scheduleStart" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Hora Fim</label>
+                            <input type="time" id="scheduleEnd" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sala</label>
+                        <input type="text" id="scheduleRoom" placeholder="Ex: 101, Lab 1" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button onclick="saveSchedule()" class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+                             Salvar
+                        </button>
+                        <button onclick="closeScheduleForm()" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let teachers = [];
+        let schedules = [];
+        let editingTeacherId = null;
+        let editingScheduleId = null;
+        const daysOfWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
+        const timeSlots = ['07:00', '08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+
+        function showView(view) {
+            if (view === 'dashboard') {
+                document.getElementById('dashboardView').style.display = 'block';
+                document.getElementById('teachersView').style.display = 'none';
+                document.getElementById('btnDashboard').className = 'px-6 py-3 rounded-lg font-medium transition-all bg-indigo-600 text-white shadow-md';
+                document.getElementById('btnTeachers').className = 'px-6 py-3 rounded-lg font-medium transition-all bg-gray-100 text-gray-700 hover:bg-gray-200';
+            } else {
+                document.getElementById('dashboardView').style.display = 'none';
+                document.getElementById('teachersView').style.display = 'block';
+                document.getElementById('btnTeachers').className = 'px-6 py-3 rounded-lg font-medium transition-all bg-indigo-600 text-white shadow-md';
+                document.getElementById('btnDashboard').className = 'px-6 py-3 rounded-lg font-medium transition-all bg-gray-100 text-gray-700 hover:bg-gray-200';
+            }
+        }
+
+        function openTeacherForm(id = null) {
+            editingTeacherId = id;
+            if (id) {
+                const teacher = teachers.find(t => t.id === id);
+                document.getElementById('teacherFormTitle').textContent = 'Editar Professor';
+                document.getElementById('teacherName').value = teacher.name;
+                document.getElementById('teacherEmail').value = teacher.email;
+                document.getElementById('teacherPhone').value = teacher.phone;
+                document.getElementById('teacherSubjects').value = teacher.subjects;
+                document.getElementById('teacherBio').value = teacher.bio;
+            } else {
+                document.getElementById('teacherFormTitle').textContent = 'Cadastrar Novo Professor';
+                document.getElementById('teacherName').value = '';
+                document.getElementById('teacherEmail').value = '';
+                document.getElementById('teacherPhone').value = '';
+                document.getElementById('teacherSubjects').value = '';
+                document.getElementById('teacherBio').value = '';
+            }
+            document.getElementById('teacherModal').style.display = 'flex';
+        }
+
+        function closeTeacherForm() {
+            document.getElementById('teacherModal').style.display = 'none';
+            editingTeacherId = null;
+        }
+
+        function saveTeacher() {
+            const name = document.getElementById('teacherName').value;
+            const email = document.getElementById('teacherEmail').value;
+            const phone = document.getElementById('teacherPhone').value;
+            const subjects = document.getElementById('teacherSubjects').value;
+            const bio = document.getElementById('teacherBio').value;
+
+            if (!name || !email || !phone || !subjects) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (editingTeacherId) {
+                const index = teachers.findIndex(t => t.id === editingTeacherId);
+                teachers[index] = { id: editingTeacherId, name, email, phone, subjects, bio };
+            } else {
+                teachers.push({ id: Date.now(), name, email, phone, subjects, bio });
+            }
+
+            closeTeacherForm();
+            renderTeachers();
+            updateTeacherSelect();
+        }
+
+        function deleteTeacher(id) {
+            if (confirm('Tem certeza que deseja excluir este professor?')) {
+                teachers = teachers.filter(t => t.id !== id);
+                schedules = schedules.filter(s => s.teacherId !== id);
+                renderTeachers();
+                renderSchedules();
+                updateTeacherSelect();
+            }
+        }
+
+        function renderTeachers() {
+            const container = document.getElementById('teachersList');
+            if (teachers.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <p>Nenhum professor cadastrado ainda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    ${teachers.map(teacher => `
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                        ${teacher.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-gray-800">${teacher.name}</h3>
+                                        <p class="text-sm text-gray-600">${teacher.subjects}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-1 mb-3">
+                                <p class="text-sm text-gray-600">📧 ${teacher.email}</p>
+                                <p class="text-sm text-gray-600">📱 ${teacher.phone}</p>
+                                ${teacher.bio ? `<p class="text-sm text-gray-700 mt-2">${teacher.bio}</p>` : ''}
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="openTeacherForm(${teacher.id})" class="flex-1 py-2 px-3 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium">
+                                     Editar
+                                </button>
+                                <button onclick="deleteTeacher(${teacher.id})" class="flex-1 py-2 px-3 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium">
+                                     Excluir
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function updateTeacherSelect() {
+            const select = document.getElementById('scheduleTeacher');
+            select.innerHTML = '<option value="">Selecione um professor</option>' + 
+                teachers.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+        }
+
+        function openScheduleForm(id = null) {
+            editingScheduleId = id;
+            if (id) {
+                const schedule = schedules.find(s => s.id === id);
+                document.getElementById('scheduleFormTitle').textContent = 'Editar Horário';
+                document.getElementById('scheduleTeacher').value = schedule.teacherId;
+                document.getElementById('scheduleSubject').value = schedule.subject;
+                document.getElementById('scheduleDay').value = schedule.day;
+                document.getElementById('scheduleStart').value = schedule.start;
+                document.getElementById('scheduleEnd').value = schedule.end;
+                document.getElementById('scheduleRoom').value = schedule.room;
+            } else {
+                document.getElementById('scheduleFormTitle').textContent = 'Adicionar Novo Horário';
+                document.getElementById('scheduleTeacher').value = '';
+                document.getElementById('scheduleSubject').value = '';
+                document.getElementById('scheduleDay').value = '';
+                document.getElementById('scheduleStart').value = '';
+                document.getElementById('scheduleEnd').value = '';
+                document.getElementById('scheduleRoom').value = '';
+            }
+            document.getElementById('scheduleModal').style.display = 'flex';
+        }
+
+        function closeScheduleForm() {
+            document.getElementById('scheduleModal').style.display = 'none';
+            editingScheduleId = null;
+        }
+
+        function saveSchedule() {
+            const teacherId = parseInt(document.getElementById('scheduleTeacher').value);
+            const subject = document.getElementById('scheduleSubject').value;
+            const day = document.getElementById('scheduleDay').value;
+            const start = document.getElementById('scheduleStart').value;
+            const end = document.getElementById('scheduleEnd').value;
+            const room = document.getElementById('scheduleRoom').value;
+
+            if (!teacherId || !subject || !day || !start || !end || !room) {
+                alert('Por favor, preencha todos os campos');
+                return;
+            }
+
+            const teacher = teachers.find(t => t.id === teacherId);
+
+            if (editingScheduleId) {
+                const index = schedules.findIndex(s => s.id === editingScheduleId);
+                schedules[index] = { id: editingScheduleId, teacherId, teacherName: teacher.name, subject, day, start, end, room };
+            } else {
+                schedules.push({ id: Date.now(), teacherId, teacherName: teacher.name, subject, day, start, end, room });
+            }
+
+            closeScheduleForm();
+            renderSchedules();
+        }
+
+        function deleteSchedule(id) {
+            if (confirm('Tem certeza que deseja excluir este horário?')) {
+                schedules = schedules.filter(s => s.id !== id);
+                renderSchedules();
+            }
+        }
+
+        function renderSchedules() {
+            renderScheduleGrid();
+            renderScheduleList();
+        }
+
+        function renderScheduleGrid() {
+            const container = document.getElementById('scheduleGrid');
+            if (schedules.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <p>Nenhum horário cadastrado ainda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<table class="w-full"><thead><tr class="border-b-2 border-gray-200">';
+            html += '<th class="text-left p-3 font-semibold text-gray-700">Horário</th>';
+            daysOfWeek.forEach(day => {
+                html += `<th class="text-left p-3 font-semibold text-gray-700">${day}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            timeSlots.forEach(time => {
+                html += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 font-medium text-gray-600">${time}</td>`;
+                daysOfWeek.forEach(day => {
+                    const schedule = schedules.find(s => s.day === day && s.start <= time && s.end > time);
+                    html += '<td class="p-3">';
+                    if (schedule) {
+                        html += `
+                            <div class="bg-indigo-100 border-l-4 border-indigo-600 p-2 rounded text-sm">
+                                <div class="font-semibold text-indigo-900">${schedule.subject}</div>
+                                <div class="text-indigo-700 text-xs">${schedule.teacherName}</div>
+                                <div class="text-indigo-600 text-xs">Sala ${schedule.room}</div>
+                            </div>
+                        `;
+                    }
+                    html += '</td>';
+                });
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderScheduleList() {
+            const container = document.getElementById('scheduleList');
+            if (schedules.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhum horário na lista.</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="space-y-2">
+                    ${schedules.map(schedule => `
+                        <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex-1">
+                                <div class="font-semibold text-gray-800">${schedule.subject}</div>
+                                <div class="text-sm text-gray-600">
+                                    ${schedule.teacherName} • ${schedule.day} • ${schedule.start} - ${schedule.end} • Sala ${schedule.room}
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="openScheduleForm(${schedule.id})" class="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors">
+                                    
+                                </button>
+                                <button onclick="deleteSchedule(${schedule.id})" class="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors">
+                                    
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Initialize
+        renderTeachers();
+        renderSchedules();
+    </script>
 </body>
-
 </html>
