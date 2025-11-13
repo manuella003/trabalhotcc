@@ -22,9 +22,9 @@ body {
    min-height: 100vh;
    background-color: rgba(255, 255, 255, 0.87);
    border: none;
-   color: #ffffffde;
+   color: #309ef8de;
    padding: 40px;
-   box-shadow: 0 0 10px rgba(255, 255, 255, 0.877);
+   box-shadow: 0 0 10px #309ef8de;
    display: flex;
    align-items: center;
 }
@@ -51,17 +51,17 @@ body {
 .input-box input {
     width: 100%;
     height: 100%;
-    background-color: #ffffffdc;
-    border: 3px solid rgba(255, 255, 255, 0.877);
+    background-color: #309ef8de;
+    border: 3px solid #309ef8de;
     border-radius: 15px;
     outline: none;
     font-size: 15px;
-    color: #ffffff;
+    color: #ffffffde;
     padding: 15px 30px 15px 50px;
 }
 
 .input-box input::placeholder {
-    color:  rgb(255, 255, 255);
+    color:  #ffffff;
 }
 
 .input-box i {
@@ -70,7 +70,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
-    color: #ffffff;
+    color: #ffffffde;
 }
 
 .remember-forgot {
@@ -81,13 +81,13 @@ body {
 }
 
 .remember-forgot label input {
-    accent-color: white;
+    accent-color: #309ef8de;
     margin-right: 5px;
 }
 
 .remember-forgot a {
     text-decoration: none;
-    color:  #ffffffdc;
+    color: #309ef8de;
 }
 
 .remember-forgot a:hover {
@@ -97,20 +97,20 @@ body {
 .login {
     width: 100%;
     height: 50px;
-    background-color: #ffffffde;
+    background-color: #309ef8de;
     border: none;
     border-radius: 40px;
     cursor: pointer;
     font-size: 16px;
-    color: #ffffffdc;
+    color: #ffffffde;
     font-weight: 600;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.877);
+    box-shadow: 0 0 10px #ffffffde;
     margin-bottom: 20px;
 }
 
 .login:hover {
     background-color: white;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid #309ef8de;
 }
 
 .register-link {
@@ -119,7 +119,7 @@ body {
 }
 
 .register-link a {
-    color: #ffffffa6;
+    color: #309ef8de;
     text-decoration: none;
 }
 
