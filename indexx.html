@@ -8,14 +8,8 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font Awesome (para o olhinho) -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-xh6O1v9YyF5G9pjJ50bM+4D1Dlm0Bz6Q0IVQxV7LgbCyZykh5DnGSR6lGz1Y7ckwU4TRP1B1lJRLryYxjD1K5Q=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
+  <!-- Font Awesome (ícone do olho) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
@@ -27,10 +21,39 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .fade-in { animation: fadeIn 0.4s ease-out; }
+
+    /* 🎨 Tema azul e branco */
+    .fc {
+      background-color: white;
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .fc-toolbar-title {
+      color: #001f4d !important; /* azul escuro */
+      font-weight: bold;
+    }
+    .fc-button {
+      background-color: #001f4d !important;
+      border: none !important;
+      color: white !important;
+    }
+    .fc-button:hover {
+      background-color: #003080 !important;
+    }
+    .fc-daygrid-day-number {
+      color: #001f4d !important;
+      font-weight: 500;
+    }
+    .fc-event {
+      background-color: #003080 !important;
+      border: none !important;
+      color: white !important;
+      border-radius: 6px !important;
+    }
   </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen font-sans">
+<body class="bg-gray-100 min-h-screen font-sans">
 
   <!-- Página de Cadastro -->
   <div id="cadastroPage" class="flex items-center justify-center h-screen fade-in">
@@ -41,27 +64,27 @@
         <img src="imagemsenai.png" alt="Logo SENAI" class="w-32 h-auto">
       </div>
 
-      <h1 class="text-2xl font-bold text-gray-800 mb-6">Cadastro de Professor</h1>
+      <h1 class="text-2xl font-bold text-[#001f4d] mb-6">Cadastro de Professor</h1>
 
       <form id="cadastroForm" class="space-y-4 text-left">
         <div>
           <label class="block text-gray-700 mb-1">Nome Completo</label>
-          <input type="text" id="profName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" placeholder="Digite o nome completo" required>
+          <input type="text" id="profName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d]" placeholder="Digite o nome completo" required>
         </div>
         <div>
           <label class="block text-gray-700 mb-1">E-mail</label>
-          <input type="email" id="profEmail" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" placeholder="Digite o e-mail" required>
+          <input type="email" id="profEmail" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d]" placeholder="Digite o e-mail" required>
         </div>
         <div>
           <label class="block text-gray-700 mb-1">Senha</label>
           <div class="relative">
-            <input type="password" id="profSenha" class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-blue-500" placeholder="Crie uma senha" required>
+            <input type="password" id="profSenha" class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-[#001f4d]" placeholder="Crie uma senha" required>
             <button type="button" id="toggleSenha" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
               <i class="fa-solid fa-eye" id="eyeIcon"></i>
             </button>
           </div>
         </div>
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-200">
+        <button type="submit" class="w-full bg-[#001f4d] text-white py-2 rounded-lg font-semibold hover:bg-[#003080] transition duration-200">
           Cadastrar
         </button>
       </form>
@@ -73,12 +96,14 @@
     <header class="flex justify-between items-center mb-6">
       <div class="flex items-center space-x-4">
         <img src="imagemsenai.png" alt="Logo SENAI" class="w-28">
-        <h1 class="text-2xl font-bold text-blue-800">Área do Professor</h1>
+        <h1 class="text-2xl font-bold text-[#001f4d]">Área do Professor</h1>
       </div>
       <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">
         Sair
       </button>
     </header>
+
+    <h2 id="welcomeText" class="text-xl font-semibold text-[#001f4d] mb-4"></h2>
 
     <!-- Calendário -->
     <div class="bg-white p-4 rounded-xl shadow-md flex-grow">
@@ -90,11 +115,11 @@
       <h2 class="text-xl font-semibold mb-4 text-gray-800">Adicionar Horário</h2>
       <form id="eventForm" class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
         <input type="text" id="eventTitle" placeholder="Título da Aula"
-               class="border border-gray-300 rounded-lg px-3 py-2 flex-1 focus:ring-2 focus:ring-blue-500">
+               class="border border-gray-300 rounded-lg px-3 py-2 flex-1 focus:ring-2 focus:ring-[#001f4d]">
         <input type="date" id="eventDate"
-               class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
+               class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d]">
         <button type="submit"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">
+                class="bg-[#001f4d] hover:bg-[#003080] text-white px-4 py-2 rounded-lg font-semibold">
           Adicionar
         </button>
       </form>
@@ -109,8 +134,9 @@
     const senhaInput = document.getElementById('profSenha');
     const toggleSenha = document.getElementById('toggleSenha');
     const eyeIcon = document.getElementById('eyeIcon');
+    const welcomeText = document.getElementById('welcomeText');
 
-    // 👁️ Alternar visibilidade da senha
+    // 👁️ Mostrar / esconder senha
     toggleSenha.addEventListener('click', () => {
       const isPassword = senhaInput.type === 'password';
       senhaInput.type = isPassword ? 'text' : 'password';
@@ -118,23 +144,29 @@
       eyeIcon.classList.toggle('fa-eye-slash');
     });
 
-    // 📋 Redireciona para área do professor
+    // 📋 Cadastro -> Área do Professor
     cadastroForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const nome = document.getElementById('profName').value;
       cadastroPage.classList.add('hidden');
       professorArea.classList.remove('hidden');
+      welcomeText.textContent = `Bem-vindo(a), Professor(a) ${nome}!`;
       renderCalendar();
     });
 
-    // 🔴 Botão de sair
+    // 🔴 Sair
     logoutBtn.addEventListener('click', () => {
       professorArea.classList.add('hidden');
       cadastroPage.classList.remove('hidden');
     });
 
-    // 📅 Função para exibir calendário completo
+    // 📅 Função do calendário
     function renderCalendar() {
       const calendarEl = document.getElementById('calendar');
+
+      // 🔹 Carregar eventos salvos
+      const savedEvents = JSON.parse(localStorage.getItem('eventos')) || [];
+
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'pt-br',
@@ -145,17 +177,24 @@
           center: 'title',
           right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
-        events: []
+        events: savedEvents
       });
+
       calendar.render();
 
-      // Adicionar evento (aula)
+      // 🟦 Adicionar novos eventos
       document.getElementById('eventForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const title = document.getElementById('eventTitle').value;
         const date = document.getElementById('eventDate').value;
         if (title && date) {
-          calendar.addEvent({ title, start: date });
+          const newEvent = { title, start: date };
+          calendar.addEvent(newEvent);
+
+          // Salvar no localStorage
+          savedEvents.push(newEvent);
+          localStorage.setItem('eventos', JSON.stringify(savedEvents));
+
           document.getElementById('eventTitle').value = '';
           document.getElementById('eventDate').value = '';
           alert('Horário adicionado com sucesso!');
