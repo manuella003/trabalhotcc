@@ -1,17 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema SENAI - Cadastro e Área do Professor</title>
-
-  <!-- Tailwind CSS -->
+  <title>Sistema SENAI - Calendário Acadêmico</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font Awesome (ícone do olho) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
@@ -22,14 +19,13 @@
     }
     .fade-in { animation: fadeIn 0.4s ease-out; }
 
-    /* 🎨 Tema azul e branco */
     .fc {
       background-color: white;
       border-radius: 12px;
       padding: 10px;
     }
     .fc-toolbar-title {
-      color: #001f4d !important; /* azul escuro */
+      color: #001f4d !important;
       font-weight: bold;
     }
     .fc-button {
@@ -53,80 +49,162 @@
   </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen font-sans">
+<body class="bg-white min-h-screen font-sans">
 
   <!-- Página de Cadastro -->
   <div id="cadastroPage" class="flex items-center justify-center h-screen fade-in">
-    <div class="bg-white p-10 rounded-xl shadow-lg w-full max-w-md text-center">
+    <div class="bg-white p-10 rounded-xl shadow-lg w-full max-w-md text-center border-2 border-gray-200">
       
-      <!-- Logo SENAI -->
       <div class="mb-6 flex justify-center">
-        <img src="imagemsenai.png" alt="Logo SENAI" class="w-32 h-auto">
+        <div class="w-32 h-32 bg-[#001f4d] rounded-full flex items-center justify-center">
+          <img src="imagemsenai.png" alt="">
+        </div>
       </div>
 
       <h1 class="text-2xl font-bold text-[#001f4d] mb-6">Cadastro de Professor</h1>
 
       <form id="cadastroForm" class="space-y-4 text-left">
         <div>
-          <label class="block text-gray-700 mb-1">Nome Completo</label>
-          <input type="text" id="profName" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d]" placeholder="Digite o nome completo" required>
+          <label class="block text-gray-700 mb-1 font-semibold">Nome Completo</label>
+          <input type="text" id="profName" class="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]" placeholder="Digite o nome completo" required>
         </div>
         <div>
-          <label class="block text-gray-700 mb-1">E-mail</label>
-          <input type="email" id="profEmail" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d]" placeholder="Digite o e-mail" required>
+          <label class="block text-gray-700 mb-1 font-semibold">E-mail</label>
+          <input type="email" id="profEmail" class="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]" placeholder="Digite o e-mail" required>
         </div>
         <div>
-          <label class="block text-gray-700 mb-1">Senha</label>
+          <label class="block text-gray-700 mb-1 font-semibold">Senha</label>
           <div class="relative">
-            <input type="password" id="profSenha" class="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-[#001f4d]" placeholder="Crie uma senha" required>
-            <button type="button" id="toggleSenha" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
+            <input type="password" id="profSenha" class="w-full border-2 border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]" placeholder="Crie uma senha" required>
+            <button type="button" id="toggleSenha" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-[#001f4d]">
               <i class="fa-solid fa-eye" id="eyeIcon"></i>
             </button>
           </div>
         </div>
-        <button type="submit" class="w-full bg-[#001f4d] text-white py-2 rounded-lg font-semibold hover:bg-[#003080] transition duration-200">
-          Cadastrar
+        <button type="submit" class="w-full bg-[#001f4d] text-white py-3 rounded-lg font-semibold hover:bg-[#003080] transition duration-200">
+          Cadastrar e Entrar
         </button>
       </form>
     </div>
   </div>
 
   <!-- Área do Professor -->
-  <div id="professorArea" class="hidden fade-in min-h-screen flex flex-col p-6">
-    <header class="flex justify-between items-center mb-6">
-      <div class="flex items-center space-x-4">
-        <img src="imagemsenai.png" alt="Logo SENAI" class="w-28">
-        <h1 class="text-2xl font-bold text-[#001f4d]">Área do Professor</h1>
+  <div id="professorArea" class="hidden fade-in min-h-screen flex flex-col">
+    <header class="bg-[#001f4d] text-white p-4 shadow-lg">
+      <div class="flex justify-between items-center max-w-7xl mx-auto">
+        <div class="flex items-center space-x-4">
+          <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+            <span class="text-[#001f4d] text-xl font-bold">S</span>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold">Sistema Acadêmico SENAI</h1>
+            <p id="welcomeText" class="text-sm opacity-90"></p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button id="calendarBtn" class="px-4 py-2 bg-white text-[#001f4d] rounded-lg font-semibold hover:bg-gray-100 transition">
+            <i class="fa-solid fa-calendar mr-2"></i>Calendário
+          </button>
+          <button id="disciplinasBtn" class="px-4 py-2 bg-[#003080] text-white rounded-lg font-semibold hover:bg-[#004099] transition">
+            <i class="fa-solid fa-book mr-2"></i>Disciplinas
+          </button>
+          <button id="professoresBtn" class="px-4 py-2 bg-[#003080] text-white rounded-lg font-semibold hover:bg-[#004099] transition">
+            <i class="fa-solid fa-user mr-2"></i>Professores
+          </button>
+          <button id="horariosBtn" class="px-4 py-2 bg-[#003080] text-white rounded-lg font-semibold hover:bg-[#004099] transition">
+            <i class="fa-solid fa-clock mr-2"></i>Horários
+          </button>
+          <button id="logoutBtn" class="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition">
+            <i class="fa-solid fa-sign-out-alt mr-2"></i>Sair
+          </button>
+        </div>
       </div>
-      <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">
-        Sair
-      </button>
     </header>
 
-    <h2 id="welcomeText" class="text-xl font-semibold text-[#001f4d] mb-4"></h2>
-
-    <!-- Calendário -->
-    <div class="bg-white p-4 rounded-xl shadow-md flex-grow">
-      <div id="calendar" class="h-[80vh]"></div>
+    <!-- View Calendário -->
+    <div id="calendarView" class="p-6 flex-grow">
+      <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-gray-200 h-full">
+        <div id="calendar" class="h-full"></div>
+      </div>
     </div>
 
-    <!-- Adicionar Horários -->
-    <div class="bg-white p-4 rounded-xl shadow-md mt-6">
-      <h2 class="text-xl font-semibold mb-4 text-gray-800">Adicionar Horário</h2>
-      <form id="eventForm" class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-        <input type="text" id="eventTitle" placeholder="Título da Aula"
-               class="border border-gray-300 rounded-lg px-3 py-2 flex-1 focus:ring-2 focus:ring-[#001f4d]">
-        <input type="date" id="eventDate"
-               class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#001f4d]">
-        <button type="submit"
-                class="bg-[#001f4d] hover:bg-[#003080] text-white px-4 py-2 rounded-lg font-semibold">
-          Adicionar
-        </button>
-      </form>
+    <!-- View Disciplinas -->
+    <div id="disciplinasView" class="hidden p-6 overflow-auto">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#001f4d] mb-6">Gerenciar Disciplinas</h2>
+        
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6 border-2 border-gray-200">
+          <h3 class="text-xl font-bold text-[#001f4d] mb-4">Nova Disciplina</h3>
+          <div class="space-y-4">
+            <input type="text" id="className" placeholder="Nome da disciplina" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            <select id="classProfessor" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+              <option value="">Selecione o professor</option>
+            </select>
+            <div class="flex items-center gap-3">
+              <label class="text-[#001f4d] font-semibold">Cor:</label>
+              <input type="color" id="classColor" value="#003080" class="h-12 w-20 border-2 border-gray-300 rounded-lg cursor-pointer">
+            </div>
+            <button id="addClassBtn" class="w-full bg-[#001f4d] text-white py-3 rounded-lg font-semibold hover:bg-[#003080] transition">
+              <i class="fa-solid fa-plus mr-2"></i>Adicionar Disciplina
+            </button>
+          </div>
+        </div>
+
+        <div id="classesList" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- View Professores -->
+    <div id="professoresView" class="hidden p-6 overflow-auto">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#001f4d] mb-6">Área dos Professores</h2>
+        
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6 border-2 border-gray-200">
+          <h3 class="text-xl font-bold text-[#001f4d] mb-4">Novo Professor</h3>
+          <div class="space-y-4">
+            <input type="text" id="profNameAdd" placeholder="Nome do professor" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            <input type="text" id="profSubject" placeholder="Matéria" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            <input type="email" id="profEmailAdd" placeholder="E-mail" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            <button id="addProfBtn" class="w-full bg-[#001f4d] text-white py-3 rounded-lg font-semibold hover:bg-[#003080] transition">
+              <i class="fa-solid fa-user-plus mr-2"></i>Adicionar Professor
+            </button>
+          </div>
+        </div>
+
+        <div id="professoresList" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- View Horários -->
+    <div id="horariosView" class="hidden p-6 overflow-auto">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#001f4d] mb-6">Horários das Aulas</h2>
+        
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6 border-2 border-gray-200">
+          <h3 class="text-xl font-bold text-[#001f4d] mb-4">Novo Horário</h3>
+          <div class="space-y-4">
+            <select id="scheduleClass" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+              <option value="">Selecione a disciplina</option>
+            </select>
+            <input type="date" id="scheduleDate" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            <div class="grid grid-cols-2 gap-4">
+              <input type="time" id="scheduleStart" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+              <input type="time" id="scheduleEnd" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            </div>
+            <input type="text" id="scheduleRoom" placeholder="Sala (opcional)" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#001f4d] focus:border-[#001f4d]">
+            <button id="addScheduleBtn" class="w-full bg-[#001f4d] text-white py-3 rounded-lg font-semibold hover:bg-[#003080] transition">
+              <i class="fa-solid fa-clock mr-2"></i>Adicionar Horário
+            </button>
+          </div>
+        </div>
+
+        <div id="schedulesList" class="space-y-4"></div>
+      </div>
     </div>
   </div>
 
   <script>
+    // Elementos DOM
     const cadastroPage = document.getElementById('cadastroPage');
     const professorArea = document.getElementById('professorArea');
     const cadastroForm = document.getElementById('cadastroForm');
@@ -136,7 +214,25 @@
     const eyeIcon = document.getElementById('eyeIcon');
     const welcomeText = document.getElementById('welcomeText');
 
-    // 👁️ Mostrar / esconder senha
+    // Views
+    const calendarView = document.getElementById('calendarView');
+    const disciplinasView = document.getElementById('disciplinasView');
+    const professoresView = document.getElementById('professoresView');
+    const horariosView = document.getElementById('horariosView');
+
+    // Botões de navegação
+    const calendarBtn = document.getElementById('calendarBtn');
+    const disciplinasBtn = document.getElementById('disciplinasBtn');
+    const professoresBtn = document.getElementById('professoresBtn');
+    const horariosBtn = document.getElementById('horariosBtn');
+
+    // Dados
+    let professors = JSON.parse(localStorage.getItem('professors')) || [];
+    let classes = JSON.parse(localStorage.getItem('classes')) || [];
+    let schedules = JSON.parse(localStorage.getItem('schedules')) || [];
+    let calendar;
+
+    // Toggle senha
     toggleSenha.addEventListener('click', () => {
       const isPassword = senhaInput.type === 'password';
       senhaInput.type = isPassword ? 'text' : 'password';
@@ -144,7 +240,7 @@
       eyeIcon.classList.toggle('fa-eye-slash');
     });
 
-    // 📋 Cadastro -> Área do Professor
+    // Cadastro
     cadastroForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const nome = document.getElementById('profName').value;
@@ -152,22 +248,214 @@
       professorArea.classList.remove('hidden');
       welcomeText.textContent = `Bem-vindo(a), Professor(a) ${nome}!`;
       renderCalendar();
+      updateAllLists();
     });
 
-    // 🔴 Sair
+    // Logout
     logoutBtn.addEventListener('click', () => {
       professorArea.classList.add('hidden');
       cadastroPage.classList.remove('hidden');
     });
 
-    // 📅 Função do calendário
+    // Navegação
+    function showView(view) {
+      [calendarView, disciplinasView, professoresView, horariosView].forEach(v => v.classList.add('hidden'));
+      view.classList.remove('hidden');
+      
+      [calendarBtn, disciplinasBtn, professoresBtn, horariosBtn].forEach(btn => {
+        btn.classList.remove('bg-white', 'text-[#001f4d]');
+        btn.classList.add('bg-[#003080]', 'text-white');
+      });
+    }
+
+    calendarBtn.addEventListener('click', () => {
+      showView(calendarView);
+      calendarBtn.classList.remove('bg-[#003080]', 'text-white');
+      calendarBtn.classList.add('bg-white', 'text-[#001f4d]');
+      if (calendar) calendar.render();
+    });
+
+    disciplinasBtn.addEventListener('click', () => {
+      showView(disciplinasView);
+      disciplinasBtn.classList.remove('bg-[#003080]', 'text-white');
+      disciplinasBtn.classList.add('bg-white', 'text-[#001f4d]');
+    });
+
+    professoresBtn.addEventListener('click', () => {
+      showView(professoresView);
+      professoresBtn.classList.remove('bg-[#003080]', 'text-white');
+      professoresBtn.classList.add('bg-white', 'text-[#001f4d]');
+    });
+
+    horariosBtn.addEventListener('click', () => {
+      showView(horariosView);
+      horariosBtn.classList.remove('bg-[#003080]', 'text-white');
+      horariosBtn.classList.add('bg-white', 'text-[#001f4d]');
+    });
+
+    // Professores
+    document.getElementById('addProfBtn').addEventListener('click', () => {
+      const name = document.getElementById('profNameAdd').value;
+      const subject = document.getElementById('profSubject').value;
+      const email = document.getElementById('profEmailAdd').value;
+
+      if (name) {
+        professors.push({ id: Date.now(), name, subject, email });
+        localStorage.setItem('professors', JSON.stringify(professors));
+        updateAllLists();
+        document.getElementById('profNameAdd').value = '';
+        document.getElementById('profSubject').value = '';
+        document.getElementById('profEmailAdd').value = '';
+      }
+    });
+
+    // Disciplinas
+    document.getElementById('addClassBtn').addEventListener('click', () => {
+      const name = document.getElementById('className').value;
+      const professor = document.getElementById('classProfessor').value;
+      const color = document.getElementById('classColor').value;
+
+      if (name && professor) {
+        classes.push({ id: Date.now(), name, professor, color });
+        localStorage.setItem('classes', JSON.stringify(classes));
+        updateAllLists();
+        document.getElementById('className').value = '';
+        document.getElementById('classProfessor').value = '';
+        document.getElementById('classColor').value = '#003080';
+      }
+    });
+
+    // Horários
+    document.getElementById('addScheduleBtn').addEventListener('click', () => {
+      const className = document.getElementById('scheduleClass').value;
+      const date = document.getElementById('scheduleDate').value;
+      const startTime = document.getElementById('scheduleStart').value;
+      const endTime = document.getElementById('scheduleEnd').value;
+      const room = document.getElementById('scheduleRoom').value;
+
+      if (className && date && startTime && endTime) {
+        const classInfo = classes.find(c => c.name === className);
+        schedules.push({ 
+          id: Date.now(), 
+          class: className, 
+          date, 
+          startTime, 
+          endTime, 
+          room,
+          color: classInfo?.color || '#003080'
+        });
+        localStorage.setItem('schedules', JSON.stringify(schedules));
+        updateAllLists();
+        if (calendar) {
+          calendar.addEvent({
+            title: `${className} (${startTime}-${endTime})`,
+            start: date,
+            backgroundColor: classInfo?.color || '#003080'
+          });
+        }
+        document.getElementById('scheduleClass').value = '';
+        document.getElementById('scheduleDate').value = '';
+        document.getElementById('scheduleStart').value = '';
+        document.getElementById('scheduleEnd').value = '';
+        document.getElementById('scheduleRoom').value = '';
+      }
+    });
+
+    function updateAllLists() {
+      // Atualizar lista de professores
+      const profList = document.getElementById('professoresList');
+      profList.innerHTML = professors.map(p => `
+        <div class="bg-white p-4 rounded-lg shadow border-2 border-gray-200 flex justify-between items-center">
+          <div>
+            <div class="font-bold text-[#001f4d] text-xl">${p.name}</div>
+            <div class="text-gray-700 mt-1">Matéria: ${p.subject}</div>
+            <div class="text-gray-600 mt-1">E-mail: ${p.email}</div>
+          </div>
+          <button onclick="deleteProf(${p.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+
+      // Atualizar select de professores
+      const profSelect = document.getElementById('classProfessor');
+      profSelect.innerHTML = '<option value="">Selecione o professor</option>' + 
+        professors.map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+
+      // Atualizar lista de disciplinas
+      const classList = document.getElementById('classesList');
+      classList.innerHTML = classes.map(c => `
+        <div class="bg-white p-4 rounded-lg shadow border-2 border-gray-200 flex justify-between items-center">
+          <div class="flex items-center gap-4">
+            <div class="w-6 h-6 rounded-full border-2 border-[#001f4d]" style="background-color: ${c.color}"></div>
+            <div>
+              <div class="font-bold text-[#001f4d] text-lg">${c.name}</div>
+              <div class="text-gray-700">Professor: ${c.professor}</div>
+            </div>
+          </div>
+          <button onclick="deleteClass(${c.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+
+      // Atualizar select de disciplinas
+      const classSelect = document.getElementById('scheduleClass');
+      classSelect.innerHTML = '<option value="">Selecione a disciplina</option>' + 
+        classes.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+
+      // Atualizar lista de horários
+      const schedList = document.getElementById('schedulesList');
+      schedList.innerHTML = schedules.sort((a, b) => {
+        const dateCompare = a.date.localeCompare(b.date);
+        if (dateCompare !== 0) return dateCompare;
+        return a.startTime.localeCompare(b.startTime);
+      }).map(s => `
+        <div class="bg-white p-4 rounded-lg shadow border-2 border-gray-200 flex justify-between items-center">
+          <div class="flex items-center gap-4">
+            <div class="w-6 h-6 rounded-full border-2 border-[#001f4d]" style="background-color: ${s.color}"></div>
+            <div>
+              <div class="font-bold text-[#001f4d] text-lg">${s.class}</div>
+              <div class="text-gray-700">${new Date(s.date + 'T00:00').toLocaleDateString('pt-BR')} | ${s.startTime} - ${s.endTime}</div>
+              ${s.room ? `<div class="text-gray-600">Sala: ${s.room}</div>` : ''}
+            </div>
+          </div>
+          <button onclick="deleteSchedule(${s.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function deleteProf(id) {
+      professors = professors.filter(p => p.id !== id);
+      localStorage.setItem('professors', JSON.stringify(professors));
+      updateAllLists();
+    }
+
+    function deleteClass(id) {
+      classes = classes.filter(c => c.id !== id);
+      localStorage.setItem('classes', JSON.stringify(classes));
+      updateAllLists();
+    }
+
+    function deleteSchedule(id) {
+      schedules = schedules.filter(s => s.id !== id);
+      localStorage.setItem('schedules', JSON.stringify(schedules));
+      updateAllLists();
+      if (calendar) renderCalendar();
+    }
+
     function renderCalendar() {
       const calendarEl = document.getElementById('calendar');
+      const events = schedules.map(s => ({
+        title: `${s.class} (${s.startTime}-${s.endTime})`,
+        start: s.date,
+        backgroundColor: s.color,
+        borderColor: s.color
+      }));
 
-      // 🔹 Carregar eventos salvos
-      const savedEvents = JSON.parse(localStorage.getItem('eventos')) || [];
-
-      const calendar = new FullCalendar.Calendar(calendarEl, {
+      calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'pt-br',
         height: '100%',
@@ -177,31 +465,10 @@
           center: 'title',
           right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
-        events: savedEvents
+        events: events
       });
 
       calendar.render();
-
-      // 🟦 Adicionar novos eventos
-      document.getElementById('eventForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const title = document.getElementById('eventTitle').value;
-        const date = document.getElementById('eventDate').value;
-        if (title && date) {
-          const newEvent = { title, start: date };
-          calendar.addEvent(newEvent);
-
-          // Salvar no localStorage
-          savedEvents.push(newEvent);
-          localStorage.setItem('eventos', JSON.stringify(savedEvents));
-
-          document.getElementById('eventTitle').value = '';
-          document.getElementById('eventDate').value = '';
-          alert('Horário adicionado com sucesso!');
-        } else {
-          alert('Preencha o título e a data!');
-        }
-      });
     }
   </script>
 </body>
