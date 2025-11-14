@@ -1,0 +1,589 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark-blue: #0f172a;
+    --medium-blue: #1e293b;
+    --light-blue: #334155;
+    --accent-blue: #3b82f6;
+    --hover-blue: #2563eb;
+    --text-white: #ffffff;
+    --text-gray: #cbd5e1;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--dark-blue);
+    color: var(--text-white);
+    min-height: 100vh;
+}
+
+/* Login Page */
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--dark-blue) 0%, var(--medium-blue) 100%);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--medium-blue);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--text-white);
+}
+
+.login-header p {
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-info {
+    text-align: center;
+    margin-top: 16px;
+    color: var(--text-gray);
+}
+
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--danger);
+    color: #fca5a5;
+}
+
+/* Header */
+.header {
+    background: var(--medium-blue);
+    border-bottom: 2px solid var(--light-blue);
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.professor-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.professor-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.professor-nome {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.professor-email {
+    font-size: 12px;
+    color: var(--text-gray);
+}
+
+/* Main Content */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    min-height: calc(100vh - 88px);
+}
+
+/* View Toggle */
+.view-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    background: var(--medium-blue);
+    padding: 6px;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.view-btn {
+    padding: 10px 24px;
+    border: none;
+    background: transparent;
+    color: var(--text-gray);
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.view-btn:hover {
+    background: var(--light-blue);
+    color: var(--text-white);
+}
+
+.view-btn.active {
+    background: var(--accent-blue);
+    color: var(--text-white);
+}
+
+/* Stats Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--medium-blue);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--light-blue);
+}
+
+.stat-label {
+    color: var(--text-gray);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent-blue);
+}
+
+/* Calendar Navigation */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    background: var(--medium-blue);
+    padding: 16px 20px;
+    border-radius: 12px;
+}
+
+.calendar-nav h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.btn-nav {
+    background: var(--light-blue);
+    border: none;
+    color: var(--text-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: background 0.2s;
+}
+
+.btn-nav:hover {
+    background: var(--accent-blue);
+}
+
+/* Calendar Container */
+#calendarContainer {
+    background: var(--medium-blue);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 500px;
+}
+
+/* Month View */
+.month-view {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: var(--light-blue);
+}
+
+.weekday-header {
+    background: var(--dark-blue);
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.day-cell {
+    background: var(--medium-blue);
+    min-height: 120px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.day-cell:hover {
+    background: var(--light-blue);
+}
+
+.day-cell.other-month {
+    opacity: 0.3;
+}
+
+.day-cell.today {
+    background: rgba(59, 130, 246, 0.1);
+    border: 2px solid var(--accent-blue);
+}
+
+.day-number {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.day-aulas {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.aula-mini {
+    background: var(--accent-blue);
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Week View */
+.week-view {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    gap: 1px;
+    background: var(--light-blue);
+}
+
+.time-slot {
+    background: var(--dark-blue);
+    padding: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.week-day-slot {
+    background: var(--medium-blue);
+    padding: 8px;
+    min-height: 60px;
+    position: relative;
+}
+
+.week-day-slot.header {
+    background: var(--dark-blue);
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.week-day-slot .aula-card {
+    font-size: 11px;
+    padding: 6px;
+}
+
+/* Day View */
+.day-view {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.aula-card {
+    background: var(--light-blue);
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-blue);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.aula-card:hover {
+    background: var(--accent-blue);
+    transform: translateX(4px);
+}
+
+.aula-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+.aula-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.aula-time {
+    color: var(--text-gray);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.aula-info {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.aula-description {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.btn-delete {
+    background: var(--danger);
+    border: none;
+    color: var(--text-white);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+}
+
+/* Forms */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+label {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+input, textarea {
+    background: var(--dark-blue);
+    border: 1px solid var(--light-blue);
+    color: var(--text-white);
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: var(--accent-blue);
+    color: var(--text-white);
+}
+
+.btn-primary:hover {
+    background: var(--hover-blue);
+}
+
+.btn-secondary {
+    background: var(--light-blue);
+    color: var(--text-white);
+}
+
+.btn-secondary:hover {
+    background: var(--accent-blue);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--medium-blue);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--light-blue);
+}
+
+.modal-header h3 {
+    font-size: 20px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+}
+
+.modal-close:hover {
+    color: var(--text-white);
+}
+
+#formAula {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .month-view {
+        font-size: 12px;
+    }
+    
+    .day-cell {
+        min-height: 80px;
+    }
+    
+    .week-view {
+        overflow-x: auto;
+    }
+    
+    .professor-details {
+        display: none;
+    }
+}
